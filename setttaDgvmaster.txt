@@ -1,0 +1,35 @@
+   private void SettaDgv(DataGridView dgv)
+        {
+            // imposto num righe e colonne
+            dgv.RowCount = nTentativi;
+            dgv.ColumnCount = nChiodini;
+
+            // imposto la griglia in sola lettura
+            dgv.ReadOnly = true;
+
+            // nascondo header di riga e di colonna
+            dgv.RowHeadersVisible = false;
+            dgv.ColumnHeadersVisible = false;
+
+            // evitare ridimensionamento cella
+            dgv.AllowUserToResizeRows = false;
+            dgv.AllowUserToResizeColumns = false;
+
+            // disabilito scrollbars
+            dgv.ScrollBars = ScrollBars.None;
+
+            // resize delle celle
+            SizeDgv(dgv);
+        }
+
+        void SizeDgv(DataGridView dgv)
+        {
+            for (int i = 0; i < nTentativi; i++)
+            {
+                dgv.Rows[i].Height = dgv.Height / nTentativi;
+            }
+            for (int i = 0;i < nChiodini; i++)
+            {
+                dgv.Columns[i].Width = dgv.Width / nChiodini;
+            }
+        }

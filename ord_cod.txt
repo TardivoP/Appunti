@@ -1,0 +1,123 @@
+\\\ORDINAMENTO\\\\
+
+ / private void ordinaCanzoniperCodice()
+ {
+     //ordino tabella canzoni in base al codCantante
+     int posmin;
+     canzone aus; //record ausiliario per scambio
+
+     for (int i = 0; i <= nCanzoni - 2; i++)
+     {
+         posmin = i;
+         for (int j = i + 1; j <= nCanzoni - 1; j++)
+         {
+             if (canzoni[posmin].codCantante.CompareTo(canzoni[j].codCantante) > 0)
+                 posmin = j;
+         }
+         if (posmin != i)
+         {
+             aus = canzoni[i];
+             canzoni[i] = canzoni[posmin];
+             canzoni[posmin] = aus;
+         }
+     }
+    
+ }
+
+STESSA COSA CON VETTORE 
+              private void ordinaVet(int[] v)
+  {
+      int posmin;
+      int n = v.Length;
+      int aus;
+
+      for (int i = 0; i <= n - 2; i++)
+      {
+          posmin = i;
+          for (int j = i + 1; j < n; j++) 
+          {
+              if (v[j] < v[posmin]) // cambiare il segno per ordine crescente e decrescente
+                  posmin = j;
+          }
+          if (posmin != i) 
+          {
+              aus = v[i];
+              v[i] = v[posmin];
+              v[posmin] = aus;
+          }
+      }
+      stampaDgv(v);
+  }
+
+\\\\ROTTURA CHIAVE\\\\
+
+\\non conta l'ultimo\\\
+
+ private void rotturaChiave(int[] v)
+ {
+
+     int x = int.Parse(Interaction.InputBox("inserisci numero da trovare"));
+     int i = 0;
+     bool trovato=false;
+     bool superato=false;
+     while ((!superato)&&i<=(v.Length-1)) /// se vettore e pieno altrimenti resize
+     {
+         if (v[i]==x)
+         {
+             MessageBox.Show("pos: " + i);
+             trovato=true;
+             i=i+1;
+         }
+         else
+         {
+             if (v[i] > x)
+                 superato = true;
+             else
+                 i = i + 1;
+         }
+     }
+     if (!trovato)
+         MessageBox.Show("elemento non trovato");
+ }
+
+
+
+
+
+
+
+
+
+ private void rotturaChiaveCodice(string codice)
+ {
+    
+   
+     int i = 0;
+     bool superato = false;
+     int somma = 0;
+     int j = 0; //indice per dgvEs1
+
+     while (!superato && i <= nCanzoni - 1)
+     {
+         if (canzoni[i].codCantante == codice)
+         {
+             somma += canzoni[i].venduti;
+             //stampare su DGV
+             dgvEs1.Rows.Add();
+             dgvEs1.Rows[j].Cells[0].Value = canzoni[i].titolo;
+             dgvEs1.Rows[j].Cells[1].Value = canzoni[i].genere;
+             dgvEs1.Rows[j].Cells[2].Value = canzoni[i].codCantante;
+             dgvEs1.Rows[j].Cells[3].Value = canzoni[i].venduti.ToString();
+             j++;
+             i++;
+         }
+         else //rompo la chiave
+         {
+             if (canzoni[i].codCantante.CompareTo(codice) > 0)
+                 superato = true;
+             else
+                 i++;
+         }
+     }
+     MessageBox.Show(somma.ToString());
+ }
